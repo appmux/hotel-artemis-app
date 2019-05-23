@@ -5,6 +5,7 @@
 
 import React, {Component} from 'react';
 import {
+  Button,
   StyleSheet,
   Text,
   View
@@ -16,6 +17,10 @@ export default class Auth extends Component<Props> {
     return (
       <View style={styles.container}>
         <Text style={styles.instructions}>Welcome to Artemis</Text>
+        <Button
+          title="Reservations"
+          onPress={() => this.props.navigation.navigate('Reservations')}
+        />
       </View>
     );
   }

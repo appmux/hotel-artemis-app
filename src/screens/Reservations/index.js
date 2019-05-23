@@ -12,6 +12,10 @@ import {
 
 type Props = {};
 export default class Reservations extends Component<Props> {
+  static navigationOptions = {
+    headerTitle: 'Reservations'
+  };
+
   render() {
     return (
       <View style={styles.container}>

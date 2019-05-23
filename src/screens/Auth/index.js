@@ -13,6 +13,10 @@ import {
 
 type Props = {};
 export default class Auth extends Component<Props> {
+  static navigationOptions = {
+    title: 'Sign In',
+  };
+
   render() {
     return (
       <View style={styles.container}>

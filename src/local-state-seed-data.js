@@ -1,8 +1,15 @@
+/**
+ * Local state seed data.
+ */
+
+/* eslint-disable global-require */
 export default {
-  user: {
-    __typename: 'User',
-    name: 'Alex',
+  currentProfile: {
+    __typename: 'CurrentProfile',
+    name: null,
+    avatar: null
   },
+
   profiles: [
     {
       __typename: 'UserProfile',
@@ -20,4 +27,4 @@ export default {
       avatar: require('./theme/avatars/rocco.jpeg')
     }
   ]
-}
+};

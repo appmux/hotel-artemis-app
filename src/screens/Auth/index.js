@@ -5,30 +5,52 @@
 
 import React, {Component} from 'react';
 import {
-  Button,
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableOpacity
 } from 'react-native';
+import ProfileSelector from 'app/components/ProfileSelector'
+import {graphql, compose} from 'react-apollo';
+import getProfiles from './gql/getProfiles'
+import selectProfile from './gql/selectProfile'
 
 type Props = {};
-export default class Auth extends Component<Props> {
+
+class Auth extends Component<Props> {
   static navigationOptions = {
     title: 'Sign In',
   };
 
+  onPress = (profile) => {
+    this.props.selectProfile({variables: {...profile}})
+    this.props.navigation.navigate('Reservations')
+  }
+
   render() {
+    const {getProfiles: {profiles}} = this.props;
+
     return (
       <View style={styles.container}>
         <Text style={styles.instructions}>Welcome to Artemis</Text>
-        <Button
-          title="Reservations"
-          onPress={() => this.props.navigation.navigate('Reservations')}
-        />
+
+        {profiles.map((profile) =>
+          <TouchableOpacity
+            onPress={() => this.onPress(profile)}
+            key={profile.name}
+          >
+            <ProfileSelector profile={profile}/>
+          </TouchableOpacity>
+        )}
       </View>
     );
   }
 }
+
+export default compose(
+  graphql(selectProfile, {name: "selectProfile"}),
+  graphql(getProfiles, {name: "getProfiles"})
+)(Auth)
 
 const styles = StyleSheet.create({
   container: {

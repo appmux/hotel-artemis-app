@@ -1,5 +1,5 @@
-import AuthScreen from "./screens/Auth";
-import ReservationsScreen from "./screens/Reservations";
+import AuthScreen from './screens/Auth';
+import ReservationsScreen from './screens/Reservations';
 
 const routes = {
   Auth: {

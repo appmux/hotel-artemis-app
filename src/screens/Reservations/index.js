@@ -5,6 +5,7 @@
 
 import React, {Component} from 'react';
 import {
+  Button,
   StyleSheet,
   Text,
   View
@@ -17,8 +18,17 @@ import getReservations from './gql/getReservations';
 type Props = {};
 
 class Reservations extends Component<Props> {
-  static navigationOptions = {
-    headerTitle: 'Reservations'
+  static navigationOptions = ({navigation}) => {
+    return {
+      headerTitle: 'Reservations',
+      headerBackTitle: 'Cancel',
+      headerRight: (
+        <Button
+          onPress={() => navigation.navigate('AddReservation')}
+          title="+"
+        />
+      )
+    }
   };
 
   render() {

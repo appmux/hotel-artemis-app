@@ -19,7 +19,8 @@ type Props = {};
 
 class Auth extends Component<Props> {
   static navigationOptions = {
-    title: 'Sign In',
+    title: 'Log In',
+    headerBackTitle: 'Log Out'
   };
 
   onPress = (profile) => {

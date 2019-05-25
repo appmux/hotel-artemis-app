@@ -9,25 +9,30 @@ import {
   Text,
   View
 } from 'react-native';
-import { graphql } from 'react-apollo';
-import getCurrentProfile from './gql/getCurrentProfile'
+import {graphql, compose} from 'react-apollo';
 import ProfileSelector from "app/components/ProfileSelector";
+import getCurrentProfile from './gql/getCurrentProfile';
+import getReservations from './gql/getReservations';
 
 type Props = {};
+
 class Reservations extends Component<Props> {
   static navigationOptions = {
     headerTitle: 'Reservations'
   };
 
   render() {
-    const {data: {loading, error, currentProfile}} = this.props;
+    const {
+      getCurrentProfile: {currentProfile},
+      getReservations: {loading, error, reservations}
+    } = this.props;
 
     if (loading) {
       return <Text>Loading...</Text>;
     }
 
     if (error) {
-      return <Text>Something went wrong...</Text>;
+      return <Text>Something went wrong... Tap to try again.</Text>;
     }
 
     return (
@@ -36,12 +41,22 @@ class Reservations extends Component<Props> {
 
         <Text style={styles.instructions}>Guest: {currentProfile.name}</Text>
         <Text style={styles.instructions}>Reservations</Text>
+        <View style={styles.container}>
+          {reservations.map(({id, name}) =>
+            <Text
+              key={id}
+              style={styles.instructions}>Reservation: {name}</Text>
+          )}
+        </View>
       </View>
     );
   }
 }
 
-export default graphql(getCurrentProfile)(Reservations)
+export default compose(
+  graphql(getCurrentProfile, {name: "getCurrentProfile"}),
+  graphql(getReservations, {name: "getReservations"})
+)(Reservations)
 
 const styles = StyleSheet.create({
   container: {

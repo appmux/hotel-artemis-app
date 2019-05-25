@@ -3,19 +3,22 @@
  * @flow
  */
 
-import React, {Component} from 'react';
-import {createStackNavigator, createAppContainer} from 'react-navigation';
-import ApolloClient, {gql} from 'apollo-boost';
-import {ApolloProvider} from 'react-apollo';
-import localStateSeedData from './local-state-seed-data'
+/* eslint-disable import/no-extraneous-dependencies */
+import React, { Component } from 'react';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
+import ApolloClient, { gql } from 'apollo-boost';
+import { ApolloProvider } from 'react-apollo';
+import { ARTEMIS_API_URL } from './config/artemis-api';
+import localStateSeedData from './local-state-seed-data';
 import routes from './routes';
 
 const client = new ApolloClient({
+  uri: ARTEMIS_API_URL,
   clientState: {
     defaults: localStateSeedData,
     resolvers: {
       Mutation: {
-        selectProfile: (_, {name, avatar}, {cache}) => {
+        selectProfile: (_, { name, avatar }, { cache }) => {
           const query = gql`
             query getCurrentProfile {
               currentProfile @client {
@@ -26,7 +29,7 @@ const client = new ApolloClient({
             }
           `;
 
-          const prevState = cache.readQuery({query});
+          const prevState = cache.readQuery({ query });
 
           const data = {
             ...prevState,
@@ -37,7 +40,7 @@ const client = new ApolloClient({
             }
           };
 
-          cache.writeData({query, data});
+          cache.writeData({ query, data });
         }
       }
     }
@@ -58,8 +61,8 @@ export default class App extends Component<Props> {
   render() {
     return (
       <ApolloProvider client={client}>
-        <AppContainer/>
+        <AppContainer />
       </ApolloProvider>
-    )
+    );
   }
 }

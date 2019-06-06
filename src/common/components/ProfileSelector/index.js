@@ -4,7 +4,8 @@ import {View, Text, Image, StyleSheet} from 'react-native';
 type Props = {
   profile: any
 };
-export default class Auth extends Component<Props> {
+
+export default class ProfileSelector extends Component<Props> {
   render() {
     const { profile } = this.props;
 

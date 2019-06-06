@@ -10,12 +10,16 @@ import {
   View,
   TouchableOpacity
 } from 'react-native';
-import ProfileSelector from 'app/components/ProfileSelector'
+import ProfileSelector from 'common/components/ProfileSelector'
 import {graphql, compose} from 'react-apollo';
-import getProfiles from './gql/getProfiles'
-import selectProfile from './gql/selectProfile'
+import profiles from './gql/profiles'
+// import currentProfile from './gql/currentProfile'
 
-type Props = {};
+type Props = {
+  navigation: any,
+  getProfiles: any,
+  setCurrentProfile: any
+};
 
 class Auth extends Component<Props> {
   static navigationOptions = {
@@ -24,8 +28,9 @@ class Auth extends Component<Props> {
   };
 
   onPress = (profile) => {
-    this.props.selectProfile({variables: {...profile}})
+    this.props.setCurrentProfile({variables: {...profile}})
     this.props.navigation.navigate('Reservations')
+    // this.props.navigation.navigate('AddReservation')
   }
 
   render() {
@@ -49,8 +54,8 @@ class Auth extends Component<Props> {
 }
 
 export default compose(
-  graphql(selectProfile, {name: "selectProfile"}),
-  graphql(getProfiles, {name: "getProfiles"})
+  graphql(profiles.setCurrent, {name: 'setCurrentProfile'}),
+  graphql(profiles.get, {name: 'getProfiles'})
 )(Auth)
 
 const styles = StyleSheet.create({

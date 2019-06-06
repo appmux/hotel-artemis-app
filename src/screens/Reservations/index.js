@@ -11,11 +11,14 @@ import {
   View
 } from 'react-native';
 import {graphql, compose} from 'react-apollo';
-import ProfileSelector from "app/components/ProfileSelector";
-import getCurrentProfile from './gql/getCurrentProfile';
-import getReservations from './gql/getReservations';
+import ProfileSelector from 'common/components/ProfileSelector';
+import currentProfile from '../Auth/gql/profiles';
+import reservations from './gql/reservations';
 
-type Props = {};
+type Props = {
+  getCurrentProfile: any,
+  getReservations: any
+};
 
 class Reservations extends Component<Props> {
   static navigationOptions = ({navigation}) => {
@@ -64,8 +67,8 @@ class Reservations extends Component<Props> {
 }
 
 export default compose(
-  graphql(getCurrentProfile, {name: "getCurrentProfile"}),
-  graphql(getReservations, {name: "getReservations"})
+  graphql(currentProfile.getCurrent, {name: 'getCurrentProfile'}),
+  graphql(reservations.get, {name: 'getReservations'})
 )(Reservations)
 
 const styles = StyleSheet.create({

@@ -55,10 +55,13 @@ class Reservations extends Component<Props> {
         <Text style={styles.instructions}>Guest: {currentProfile.name}</Text>
         <Text style={styles.instructions}>Reservations</Text>
         <View style={styles.container}>
-          {reservations.map(({id, name}) =>
+          {reservations.map(({id, name, arrivalDate, departureDate}) =>
             <Text
               key={id}
-              style={styles.instructions}>Reservation: {name}</Text>
+              style={styles.instructions}>
+              Reservation: {id}
+              Dates: {arrivalDate} - {departureDate}
+            </Text>
           )}
         </View>
       </View>
@@ -68,7 +71,20 @@ class Reservations extends Component<Props> {
 
 export default compose(
   graphql(currentProfile.getCurrent, {name: 'getCurrentProfile'}),
-  graphql(reservations.get, {name: 'getReservations'})
+  graphql(reservations.search, {
+    name: 'getReservations',
+    options: (props) => {
+      const {
+        getCurrentProfile: {currentProfile}
+      } = props;
+
+      return {
+        variables: {
+          name: currentProfile.name ? currentProfile.name : ''
+        }
+      }
+    }
+  })
 )(Reservations)
 
 const styles = StyleSheet.create({

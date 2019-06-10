@@ -12,6 +12,18 @@ export const get = gql`
   }
 `;
 
+export const search = gql`
+  query search($name: String!) {
+    reservations(where: {name: $name}) {
+      id,
+      name,
+      hotelName,
+      arrivalDate,
+      departureDate
+    }
+  }
+`;
+
 export const create = gql`
   mutation createReservation(
     $name: String!,
@@ -36,5 +48,6 @@ export const create = gql`
 
 export default {
   create,
-  get
+  get,
+  search
 };

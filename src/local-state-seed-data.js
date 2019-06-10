@@ -4,6 +4,15 @@
 
 /* eslint-disable global-require */
 export default {
+  currentReservation: {
+    __typename: 'CurrentReservation',
+    id: null,
+    name: null,
+    hotelName: null,
+    arrivalDate: null,
+    departureDate: null
+  },
+
   currentProfile: {
     __typename: 'CurrentProfile',
     name: null,

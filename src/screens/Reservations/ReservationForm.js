@@ -66,6 +66,8 @@ class AddReservation extends Component<Props> {
         arrivalDate: moment(currentReservation.arrivalDate, 'DD/MM/YYYY').utc().hour(15).format(),
         departureDate: moment(currentReservation.departureDate, 'DD/MM/YYYY').utc().hour(12).format()
       }});
+
+    this.props.navigation.navigate('Reservations')
   }
 
   validateDate(date) {
